@@ -8,9 +8,10 @@
 import XCTest
 @testable import praticeUIKITxx
 
-class praticeUIKITxxTests: XCTestCase {
+class testCountriesViewController: XCTestCase {
     
     var sut: CountriesViewController!
+    var networkManager: NetworkManager!
     
     override func setUp() {
         
@@ -29,23 +30,31 @@ class praticeUIKITxxTests: XCTestCase {
     }
     
     override func tearDown() {
-        
         // Put teardown code here. This method is called after the invocation of each test method in the class.
-        super.tearDown()
+        sut = nil
+    }
+    
+    func testSetTableView() {
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        self.sut = storyboard.instantiateViewController(withIdentifier: "CountriesViewController") as! CountriesViewController
+        
+        _ = self.sut.view
+        
+        XCTAssertNotNil(self.sut.tableView)
     }
     
     func hasSegueWithIdentifier(id: String) -> Bool {
-        
         let segues = sut.value(forKey: "storyboardSegueTemplates") as? [NSObject]
         let filtered = segues?.filter({ $0.value(forKey: "identifier") as? String == id })
         
-        return (filtered?.count ?? 0 > 0) ?? false
+        return (filtered?.count ?? 0 > 0)
     }
     
-    func testSUT_HasSegue_ForTransitioningTo_ViewConrollerOne() {
-        
-        
+    func testSUT_HasSegue_ForTransitioningTo_CountryViewConroller() {
         XCTAssertTrue(hasSegueWithIdentifier(id: "ShowDetailSegue"), "Segue ShowDetailViewController should exist.")
-        
+    }
+    
+    func testSUT_ShouldSetSearchBarDelegate() {
+        XCTAssertNotNil(self.sut.searchController.searchBar)
     }
 }

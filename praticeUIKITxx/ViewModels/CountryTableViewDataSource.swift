@@ -8,17 +8,15 @@
 import Foundation
 import UIKit
 
-class CountryTableViewDataSource<CELL : UITableViewCell,T> : NSObject, UITableViewDataSource {
-    
-    
+class CountryTableViewDataSource<CELL: UITableViewCell,T>: NSObject, UITableViewDataSource {
     private var cellIdentifier : String!
-    private var items : [WorldData]!
-    var configureCell : (CELL, WorldData) -> () = {_,_ in }
-    let countryData : [WorldData]
+    private var items: [WorldData]!
+    var configureCell: (CELL, WorldData) -> () = {_,_ in }
+    let countryData: [WorldData]
     
-    init(cellIdentifier : String, items : [WorldData], configureCell : @escaping (CELL, WorldData) -> (), countryData: [WorldData]) {
+    init(cellIdentifier: String, items: [WorldData], configureCell: @escaping (CELL, WorldData) -> (), countryData: [WorldData]) {
         self.cellIdentifier = cellIdentifier
-        self.items =  items
+        self.items = items
         self.configureCell = configureCell
         self.countryData = countryData
     }
@@ -27,23 +25,12 @@ class CountryTableViewDataSource<CELL : UITableViewCell,T> : NSObject, UITableVi
         items.count
     }
     
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {        
         let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as! CELL
         let item = self.items[indexPath.row]
         self.configureCell(cell, item)
         return cell
     }
-    
-    func updateSearchResults(for searchController: UISearchController) {
-        guard let text = searchController.searchBar.text else { return }
-        
-//        func search(text: String, completion: @escaping() -> Void) {
-            items.removeAll()
-            items = text.isEmpty ? countryData : countryData.filter { $0.name.contains(text) }
-//        }
-    }
-
 }
 
 

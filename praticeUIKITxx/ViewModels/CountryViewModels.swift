@@ -7,9 +7,10 @@
 
 import Foundation
 import UIKit
-class CountryVIewModel: NSObject {
+class CountryViewModel: NSObject {
     let searchController = UISearchController()
-    
+        
+    var dataSourse: CountryTableViewDataSource<CountryTableViewCell, WorldData>!
     private var networkManager: NetworkManager!
     
     private(set) var filteredTableData: [WorldData]! {

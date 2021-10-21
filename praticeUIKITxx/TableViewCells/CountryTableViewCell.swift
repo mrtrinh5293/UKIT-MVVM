@@ -19,7 +19,6 @@ class CountryTableViewCell: UITableViewCell {
                 countryNameLabel.text = i.name
                 countryCityLabel.text = i.capital
             }
-
         }
     }
     
@@ -31,6 +30,5 @@ class CountryTableViewCell: UITableViewCell {
         super.setSelected(selected, animated: animated)
 
         // Configure the view for the selected state
-    }
-    
+    }    
 }
